@@ -1,5 +1,8 @@
 # Файлы, игнорируемые по умолчанию
 /shelf/
 /workspace.xml
+/for_tz_hr.iml
+/.env
+/node_modules
 # Запросы HTTP-клиента в редакторе
 /httpRequests/
