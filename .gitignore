@@ -1,8 +1,10 @@
-# Файлы, игнорируемые по умолчанию
-/shelf/
-/workspace.xml
-/for_tz_hr.iml
-/.env
-/node_modules
-# Запросы HTTP-клиента в редакторе
-/httpRequests/
+# Исключение файла конфигурации
+.env
+
+# Исключение папки node_modules
+node_modules/
+
+# Исключение файлов IntelliJ IDEA/PhpStorm (на основе файлов .xml в вашем проекте)
+*.iml
+workspace.xml
+modules.xml
