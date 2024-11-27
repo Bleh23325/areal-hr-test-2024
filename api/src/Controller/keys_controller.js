@@ -2,7 +2,7 @@ const db = require('../db/Connect');
 const { users_validation } = require('../validations/users_validation'); 
 class usersController{
     // создание прав доступа
-    async createusers(req, res) {
+    async createKeys(req, res) {
         const { user_name, password, root, worker } = req.body;
         console.log(user_name, password, root, worker);
 
@@ -32,7 +32,7 @@ class usersController{
     }
     
         // просмотр прав доступа
-        async getusers(req, res) {
+        async getKeys(req, res) {
             try {
                 const users = await db.query('SELECT * FROM users');
                 res.json(users.rows);
@@ -42,7 +42,7 @@ class usersController{
         }
     
         // возврат 1 прав доступа по айди
-        async getOneusers(req, res) {
+        async getOneKeys(req, res) {
             const { id } = req.params;
             try {
                 const users = await db.query('SELECT * FROM users WHERE id_users = $1', [id]);
@@ -57,7 +57,7 @@ class usersController{
         }
     
         // обновление прав доступа
-        async updateusers(req, res) {
+        async updateKeys(req, res) {
             const { id } = req.params;
             const { user_name, password, root, worker } = req.body;
 
@@ -90,7 +90,7 @@ class usersController{
         }
     
         // удаление прав доступа
-        async deleteusers(req, res) {
+        async deleteKeys(req, res) {
             const { id } = req.params;
             try {
                 const deleteusers = await db.query('DELETE FROM users WHERE id_users = $1 RETURNING *', [id]);
