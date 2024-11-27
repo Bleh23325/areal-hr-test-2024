@@ -15,6 +15,24 @@ const photosRouter = require('./src/routes/photo.routes')
 const PORT = process.env.PORT || 2508
 const  app = express()
 
+// Валидации
+
+const { departmentCodeValidation } = require('./path/to/validation');
+
+const input = {
+    passport_series: 1234,
+    passport_number: 123456,
+    department_code: '123-456',
+};
+
+const result = departmentCodeValidation({ department_code: '123-456' });
+
+if (result.error) {
+    console.log('Ошибка валидации:', result.error.details[0].message);
+} else {
+    console.log('Данные прошли валидацию!');
+}
+
 // обязательная штука для нормальной работы!
 app.use(express.json())
 
