@@ -10,5 +10,7 @@ router.get('/keys/:id', keysController.getOneKeys)
 router.put('/keys/:id', keysController.updateKeys)
 router.delete('/keys/:id', keysController.deleteKeys)
 
+// путь для экспорта данных в json файл
+router.get('/export-users', keysController.exportUsersToFile);
 
 module.exports = router

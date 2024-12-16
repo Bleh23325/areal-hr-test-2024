@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const db = require('../db/Connect');
 const { personel_operations_validation } = require('../validations/personel_operations_validation'); 
 class personelOperationsController{
@@ -103,6 +105,39 @@ class personelOperationsController{
                 res.status(500).json({ message: 'Ошибка при удалении персональной операции', error });
             }
         }
+        // выгрузка данных в файл
+    async exportPersonelOperationToFile(req, res) {
+        try {
+            // получаем данные из базы
+            const result = await db.query('SELECT * FROM personel_operations');
+            const personel_operations = result.rows;
+
+            // путь для сохранения файла
+            const exportDirectory = path.join(__dirname, '..', 'export'); // путь к папке export
+
+            // проверка существования папки и её создание при отсутствии
+            if (!fs.existsSync(exportDirectory)) {
+                fs.mkdirSync(exportDirectory);
+            }
+
+            // создаем путь для JSON файла
+            const filePath = path.join(exportDirectory, 'personel_operations.json');
+            
+            // запись данных в файл
+            fs.writeFileSync(filePath, JSON.stringify(personel_operations, null, 2));
+
+            // отправляем файл на скачивание
+            res.download(filePath, 'personel_operations.json', (err) => {
+                if (err) {
+                    console.error("Ошибка при скачивании файла:", err);
+                    res.status(500).json({ message: "Ошибка при скачивании файла" });
+                } 
+            });
+        } catch (error) {
+            console.error("Ошибка при выгрузке данных:", error);
+            res.status(500).json({ message: 'Ошибка при выгрузке данных', error });
+        }
+    }
     }
 // экспортируем объект контроллера
 module.exports = new personelOperationsController

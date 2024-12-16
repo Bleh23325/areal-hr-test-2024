@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const db = require('../db/Connect');
 const { organization_validation } = require('../validations/organization_validation'); 
 class organizationController{
@@ -101,6 +103,39 @@ class organizationController{
                 res.status(500).json({ message: 'Ошибка при удалении организации', error });
             }
         }
+        // выгрузка данных в файл
+    async exportOrganizationToFile(req, res) {
+        try {
+            // получаем данные из базы
+            const result = await db.query('SELECT * FROM organization');
+            const organization = result.rows;
+
+            // путь для сохранения файла
+            const exportDirectory = path.join(__dirname, '..', 'export'); // путь к папке export
+
+            // проверка существования папки и её создание при отсутствии
+            if (!fs.existsSync(exportDirectory)) {
+                fs.mkdirSync(exportDirectory);
+            }
+
+            // создаем путь для JSON файла
+            const filePath = path.join(exportDirectory, 'organization.json');
+            
+            // запись данных в файл
+            fs.writeFileSync(filePath, JSON.stringify(organization, null, 2));
+
+            // отправляем файл на скачивание
+            res.download(filePath, 'organization.json', (err) => {
+                if (err) {
+                    console.error("Ошибка при скачивании файла:", err);
+                    res.status(500).json({ message: "Ошибка при скачивании файла" });
+                } 
+            });
+        } catch (error) {
+            console.error("Ошибка при выгрузке данных:", error);
+            res.status(500).json({ message: 'Ошибка при выгрузке данных', error });
+        }
+    }
     }
 // экспортируем объект контроллера
 module.exports = new organizationController

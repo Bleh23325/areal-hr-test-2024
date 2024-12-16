@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const db = require('../db/Connect');
 const { histori_of_changes_validation } = require('../validations/histori_of_changes_validation'); 
 class historiOfChangesController{
@@ -103,6 +105,40 @@ class historiOfChangesController{
                 res.status(500).json({ message: 'Ошибка при удалении истории изменений', error });
             }
         }
+
+        // Экспорт данных пользователей в файл
+    async exportHistoriOfChangesToFile(req, res) {
+        try {
+            // Получаем данные из базы
+            const result = await db.query('SELECT * FROM histori_of_changes');
+            const histori_of_changes = result.rows;
+
+            // Путь для сохранения файла
+            const exportDirectory = path.join(__dirname, '..', 'export'); // Папка export
+
+            // Проверка существования папки и её создание
+            if (!fs.existsSync(exportDirectory)) {
+                fs.mkdirSync(exportDirectory);
+            }
+
+            // Создание пути для JSON файла
+            const filePath = path.join(exportDirectory, 'histori_of_changes.json');
+            
+            // Запись данных в файл
+            fs.writeFileSync(filePath, JSON.stringify(histori_of_changes, null, 2));
+
+            // Отправка файла на скачивание
+            res.download(filePath, 'histori_of_changes.json', (err) => {
+                if (err) {
+                    console.error("Ошибка при скачивании файла:", err);
+                    res.status(500).json({ message: "Ошибка при скачивании файла" });
+                } 
+            });
+        } catch (error) {
+            console.error("Ошибка при выгрузке данных:", error);
+            res.status(500).json({ message: 'Ошибка при выгрузке данных', error });
+        }
+    }
     }
 // экспортируем объект контроллера
 module.exports = new historiOfChangesController

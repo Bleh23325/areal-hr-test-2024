@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const db = require('../db/Connect');
 const { department_validation } = require('../validations/department_validation'); 
 class departmentController{
@@ -101,6 +103,39 @@ class departmentController{
                 res.status(500).json({ message: 'Ошибка при удалении отдела', error });
             }
         }
+        // выгрузка данных в файл
+    async exportDepartmentToFile(req, res) {
+        try {
+            // получаем данные из базы
+            const result = await db.query('SELECT * FROM department');
+            const department = result.rows;
+
+            // путь для сохранения файла
+            const exportDirectory = path.join(__dirname, '..', 'export'); // путь к папке export
+
+            // проверка существования папки и её создание при отсутствии
+            if (!fs.existsSync(exportDirectory)) {
+                fs.mkdirSync(exportDirectory);
+            }
+
+            // создаем путь для JSON файла
+            const filePath = path.join(exportDirectory, 'department.json');
+            
+            // запись данных в файл
+            fs.writeFileSync(filePath, JSON.stringify(department, null, 2));
+
+            // отправляем файл на скачивание
+            res.download(filePath, 'department.json', (err) => {
+                if (err) {
+                    console.error("Ошибка при скачивании файла:", err);
+                    res.status(500).json({ message: "Ошибка при скачивании файла" });
+                } 
+            });
+        } catch (error) {
+            console.error("Ошибка при выгрузке данных:", error);
+            res.status(500).json({ message: 'Ошибка при выгрузке данных', error });
+        }
+    }
     }
 // экспортируем объект контроллера
 module.exports = new departmentController

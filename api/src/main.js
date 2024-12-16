@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors');
 const jobTitleRouter = require('./routes/job_title_rotes')
 const organizationRouter = require('./routes/organization_routes')
 const departmentRouter = require('./routes/department_rotes')
@@ -15,7 +16,8 @@ const photosRouter = require('./routes/photo_routes')
 const PORT = process.env.PORT || 2508
 const  app = express()
 
-
+// без этого cors не будет работать
+app.use(cors());
 
 // обязательная штука для нормальной работы!
 app.use(express.json())

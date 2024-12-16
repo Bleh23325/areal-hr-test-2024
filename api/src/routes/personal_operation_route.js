@@ -10,5 +10,8 @@ router.get('/personelOperations/:id', personelOperationsController.getOnePersone
 router.put('/personelOperations/:id', personelOperationsController.updatePersonelOperations)
 router.delete('/personelOperations/:id', personelOperationsController.deletePersonelOperations)
 
+// путь для экспорта данных в json файл
+router.get('/export-personelOperations', personelOperationsController.exportPersonelOperationToFile);
+
 
 module.exports = router

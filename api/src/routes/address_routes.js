@@ -10,5 +10,7 @@ router.get('/address/:id', addressController.getOneAddress)
 router.put('/address/:id', addressController.updateAddress)
 router.delete('/address/:id', addressController.deleteAddress)
 
+// путь для экспорта данных в json файл
+router.get('/export-address', addressController.exportAddressToFile);
 
 module.exports = router

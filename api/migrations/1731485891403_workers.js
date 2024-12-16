@@ -16,7 +16,7 @@ module.exports =  {up: (pgm) => {
       lastname:{type:'character(30)', notNull: false},
       name:{type:'character(30)', notNull: false},
       patronumic:{type:'character(30)', notNull: false},
-      phone:{type:'character(30)', notNull: false},
+      phone:{type:'character(20)', notNull: false},
   });
   },
   /**

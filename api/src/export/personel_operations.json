@@ -1,0 +1,10 @@
+[
+  {
+    "id_personel_operations": 1,
+    "worker": 16,
+    "hiring": 2,
+    "change_salary": 50000,
+    "change_department": "2                             ",
+    "is_dismissed": false
+  }
+]

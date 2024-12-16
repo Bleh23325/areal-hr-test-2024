@@ -1,0 +1,12 @@
+[
+  {
+    "id_address": 1,
+    "region": " Регион                       ",
+    "settelment": "Поселение                     ",
+    "street": "Улица                         ",
+    "house": 12,
+    "building": "Корпус                        ",
+    "apartment": "12                            ",
+    "worker": 18
+  }
+]

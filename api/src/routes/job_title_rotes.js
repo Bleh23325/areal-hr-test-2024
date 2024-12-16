@@ -10,5 +10,7 @@ router.get('/jobTitle/:id', jobTitleController.getOneJobTitle)
 router.put('/jobTitle/:id', jobTitleController.updateJobTitle)
 router.delete('/jobTitle/:id', jobTitleController.deleteJobTitle)
 
+// путь для экспорта данных в json файл
+router.get('/export-job-titles', jobTitleController.exportJobTitlesToFile);
 
 module.exports = router

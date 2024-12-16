@@ -1,5 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 const db = require('../db/Connect');
-const { worker_validation } = require('../validations/worker_validation');
+const { workerValidation } = require('../validations/worker_validation');
 
 class workerController {
     // создание работника
@@ -7,7 +9,7 @@ class workerController {
         const { lastname, name, patronumic, phone } = req.body;
 
         // Валидация данных
-        const validationResult = worker_validation({
+        const validationResult = workerValidation({
             lastname,
             name,
             patronumic,
@@ -63,11 +65,11 @@ class workerController {
         const { lastname, name, patronumic, phone } = req.body;
 
         // Валидация данных
-        const validationResult = worker_validation({
+        const validationResult = workerValidation({
             lastname,
             name,
             patronumic,
-            phone,
+            phone
         });
 
         // Проверка наличия ошибки в валидации
@@ -103,6 +105,39 @@ class workerController {
             res.json({ message: `Работник с ID ${id} удален`, worker: deleteWorker.rows[0] });
         } catch (error) {
             res.status(500).json({ message: 'Ошибка при удалении работника', error: error.message });
+        }
+    }
+    // выгрузка данных в файл
+    async exportWorkersToFile(req, res) {
+        try {
+            // получаем данные из базы
+            const result = await db.query('SELECT * FROM workers');
+            const workers = result.rows;
+
+            // путь для сохранения файла
+            const exportDirectory = path.join(__dirname, '..', 'export'); // путь к папке export
+
+            // проверка существования папки и её создание при отсутствии
+            if (!fs.existsSync(exportDirectory)) {
+                fs.mkdirSync(exportDirectory);
+            }
+
+            // создаем путь для JSON файла
+            const filePath = path.join(exportDirectory, 'workers.json');
+            
+            // запись данных в файл
+            fs.writeFileSync(filePath, JSON.stringify(workers, null, 2));
+
+            // отправляем файл на скачивание
+            res.download(filePath, 'workers.json', (err) => {
+                if (err) {
+                    console.error("Ошибка при скачивании файла:", err);
+                    res.status(500).json({ message: "Ошибка при скачивании файла" });
+                } 
+            });
+        } catch (error) {
+            console.error("Ошибка при выгрузке данных:", error);
+            res.status(500).json({ message: 'Ошибка при выгрузке данных', error });
         }
     }
 }

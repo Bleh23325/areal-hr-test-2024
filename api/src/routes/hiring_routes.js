@@ -10,5 +10,7 @@ router.get('/hiring/:id', hiringController.getOneHiring)
 router.put('/hiring/:id', hiringController.updateHiring)
 router.delete('/hiring/:id', hiringController.deleteHiring)
 
+// путь для экспорта данных в json файл
+router.get('/export-hiring', hiringController.exportHiringToFile);
 
 module.exports = router

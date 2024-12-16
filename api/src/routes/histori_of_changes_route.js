@@ -10,5 +10,8 @@ router.get('/historiOfChanges/:id', historiOfChangesController.getOneHistoriOfCh
 router.put('/historiOfChanges/:id', historiOfChangesController.updateHistoriOfChanges)
 router.delete('/historiOfChanges/:id', historiOfChangesController.deleteHistoriOfChanges)
 
+// путь для экспорта данных в json файл
+router.get('/export-historiOfChanges', historiOfChangesController.exportHistoriOfChangesToFile);
+
 
 module.exports = router

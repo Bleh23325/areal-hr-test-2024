@@ -16,7 +16,6 @@ module.exports =  {up: (pgm) => {
       user_name: { type: 'character(30)', notNull: false },
       password: { type: 'character(30)', notNull: false },
       root: { type: 'integer', notNull: false },
-      worker: { type: 'integer', notNull: false },
   });
   },
 

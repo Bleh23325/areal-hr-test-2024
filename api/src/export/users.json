@@ -1,0 +1,16 @@
+[
+  {
+    "id_us": 1,
+    "user_name": "admin                         ",
+    "password": "admin                         ",
+    "root": 1,
+    "worker": null
+  },
+  {
+    "id_us": 2,
+    "user_name": "manager                       ",
+    "password": "manager                       ",
+    "root": 2,
+    "worker": null
+  }
+]

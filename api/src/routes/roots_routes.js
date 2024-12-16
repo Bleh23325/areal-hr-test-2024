@@ -10,5 +10,7 @@ router.get('/roots/:id', rootsController.getOneRoots)
 router.put('/roots/:id', rootsController.updateRoots)
 router.delete('/roots/:id', rootsController.deleteRoots)
 
+// путь для экспорта данных в json файл
+router.get('/export-roots', rootsController.exportRootsToFile);
 
 module.exports = router

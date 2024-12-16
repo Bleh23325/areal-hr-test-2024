@@ -1,0 +1,26 @@
+[
+  {
+    "id_department": 3,
+    "organization": 2,
+    "name": "Тестовый отдел 2              ",
+    "comments": "Коментарий 2"
+  },
+  {
+    "id_department": 4,
+    "organization": 2,
+    "name": "Наименование                  ",
+    "comments": "ОООООООООООООООООООООООООООООООООООчень длинный коментарийййййййййййййййййййййййййййййййййййййййй"
+  },
+  {
+    "id_department": 1,
+    "organization": 3,
+    "name": "Тестовый отдел 1              ",
+    "comments": "Коментарий 1"
+  },
+  {
+    "id_department": 5,
+    "organization": 3,
+    "name": "Отдел                         ",
+    "comments": "фывфывфывфыв"
+  }
+]

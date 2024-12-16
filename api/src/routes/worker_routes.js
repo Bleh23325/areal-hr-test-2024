@@ -10,5 +10,7 @@ router.get('/worker/:id', workerController.getOneWorker)
 router.put('/worker/:id', workerController.updateWorker)
 router.delete('/worker/:id', workerController.deleteWorker)
 
+// путь для экспорта данных в json файл
+router.get('/export-workers', workerController.exportWorkersToFile);
 
 module.exports = router

@@ -10,5 +10,7 @@ router.get('/department/:id', departmentController.getOneDepartment)
 router.put('/department/:id', departmentController.updateDepartment)
 router.delete('/department/:id', departmentController.deleteDepartment)
 
+// путь для экспорта данных в json файл
+router.get('/export-department', departmentController.exportDepartmentToFile);
 
 module.exports = router
